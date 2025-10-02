@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Самая прекрасная девушка — нежный минимализм</title>
+  <!-- Красивые шрифты -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --rose-50:#fff1f2; --rose-100:#ffe4e6; --rose-200:#fecdd3; --rose-300:#fda4af; --rose-700:#be123c; --rose-800:#9f1239;
+      --head:'Cormorant Garamond', serif; --body:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+      --radius: 20px;
+    }
+    html,body{height:100%;}
+    body{margin:0; font-family:var(--body); color:#5f0f28; background:var(--rose-50); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+    .app{min-height:100vh; position:relative;}
+
+    /* ===== ФОН САКУРЫ ===== */
+    .bg{position:fixed; inset:0; z-index:-2; opacity:0.9; background-image:
+        radial-gradient(1200px 600px at -10% -10%, rgba(255,228,230,.9), transparent 70%),
+        radial-gradient(1000px 600px at 110% 10%, rgba(254,215,226,.9), transparent 70%),
+        radial-gradient(900px 500px at 50% 120%, rgba(255,228,230,.9), transparent 70%),
+        url('./image/sakura-bg.jpg');
+      background-size:cover,cover,cover,cover; background-position:center; filter:blur(6px) saturate(1.05)}
+    .veil{position:fixed; inset:0; background:rgba(255,255,255,.45); z-index:-1}
+
+    /* ===== ПАДАЮЩИЕ ЛЕПЕСТКИ ===== */
+    .petals{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:-1}
+    .petal{position:absolute; display:block; width:16px; height:12px; background:rgba(254,205,211,.7); border-radius:70% 30% 70% 30%; box-shadow:0 2px 4px rgba(253,164,175,.4)}
+    @keyframes floatPetal{0%{transform:translateY(-10%) rotate(0);opacity:0}10%{opacity:.85}100%{transform:translateY(120vh) rotate(360deg);opacity:0}}
+    .petal:nth-child(1){left:5%;  top:-12%; filter:blur(2px); animation:floatPetal 21s linear 0s infinite}
+    .petal:nth-child(2){left:14%; top:-18%; animation:floatPetal 18s linear 1.2s infinite}
+    .petal:nth-child(3){left:23%; top:-10%; filter:blur(2px); animation:floatPetal 24s linear 2.4s infinite}
+    .petal:nth-child(4){left:32%; top:-16%; animation:floatPetal 19s linear .8s infinite}
+    .petal:nth-child(5){left:41%; top:-14%; animation:floatPetal 22s linear 2s infinite}
+    .petal:nth-child(6){left:50%; top:-20%; filter:blur(2px); animation:floatPetal 25s linear .5s infinite}
+    .petal:nth-child(7){left:59%; top:-12%; animation:floatPetal 20s linear 1.6s infinite}
+    .petal:nth-child(8){left:68%; top:-18%; animation:floatPetal 23s linear .2s infinite}
+    .petal:nth-child(9){left:77%; top:-10%; filter:blur(2px); animation:floatPetal 26s linear 1s infinite}
+    .petal:nth-child(10){left:86%; top:-16%; animation:floatPetal 19s linear 2.2s infinite}
+    .petal:nth-child(11){left:92%; top:-14%; filter:blur(2px); animation:floatPetal 24s linear .9s infinite}
+    .petal:nth-child(12){left:36%; top:-22%; animation:floatPetal 21s linear 1.1s infinite}
+
+    /* ===== БАЗОВАЯ СЕТКА ===== */
+    .container{max-width:1120px; margin:0 auto; padding:clamp(16px, 3vw, 24px) clamp(14px, 4vw, 24px) 80px}
+    header{padding-top:12px}
+    .brand{font-family:var(--head); font-weight:300; letter-spacing:.02em; color:#b91c1c; font-size:clamp(22px,3.5vw,32px)}
+    nav a{margin-left:18px; color:#9f1239; text-decoration:none; opacity:.85; font-size:clamp(14px,2.5vw,16px)}
+    nav a:hover{opacity:1}
+
+    /* ===== КАРТОЧКА HERO ===== */
+    .grid{display:grid; grid-template-columns:1fr; gap:clamp(16px, 3vw, 24px); align-items:center}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:rgba(255,255,255,.6); backdrop-filter:blur(18px); border-radius:var(--radius); box-shadow:0 16px 36px rgba(253,164,175,.28); padding:clamp(16px, 3.4vw, 24px); border:1px solid rgba(244,114,182,.3)}
+    h2{font-family:var(--head); font-weight:300; color:#9f1239; margin:0 0 8px; font-size:clamp(20px, 4.5vw, 28px)}
+    p{line-height:1.7; font-size:clamp(14px, 3.4vw, 16px)}
+    .figure{position:relative; aspect-ratio:4/5; width:100%; overflow:hidden; border-radius:28px; box-shadow:0 22px 44px rgba(253,164,175,.4); border:1px solid rgba(244,114,182,.3)}
+    .figure img{width:100%; height:100%; object-fit:cover}
+    .figcap{position:absolute; left:0; right:0; bottom:0; padding:10px 12px; font-size:clamp(12px, 2.8vw, 14px); color:#7f1d1d; background:linear-gradient(to top, rgba(255,228,230,.9), rgba(255,228,230,0))}
+
+    /* ===== ЦИТАТЫ ===== */
+    .quotes{display:grid; grid-template-columns:1fr; gap:clamp(12px, 2.8vw, 16px); margin-top:clamp(16px, 3vw, 24px)}
+    @media(min-width:860px){.quotes{grid-template-columns:repeat(3,1fr)}}
+    blockquote{font-family:var(--head); background:rgba(255,255,255,.6); backdrop-filter:blur(14px); border-radius:var(--radius); padding:clamp(14px,3.2vw,18px) clamp(14px,3.2vw,20px); color:#7f1d1d; border:1px solid rgba(244,114,182,.3); box-shadow:0 12px 22px rgba(253,164,175,.28); font-size:clamp(14px, 3.5vw, 16px)}
+    blockquote:before{content:'“'; font-size:clamp(32px, 8vw, 42px); line-height:0; margin-right:6px; color:#fca5a5; vertical-align:text-top}
+
+    /* ===== О НЕЙ ===== */
+    .about{margin-top:clamp(16px, 3vw, 24px)}
+    .about .card h3{font-family:var(--head); font-weight:300; color:#9f1239; margin:0 0 6px; font-size:clamp(18px, 4vw, 20px)}
+
+    /* ===== ГАЛЕРЕЯ ===== */
+    .gallery{margin-top:clamp(16px, 3vw, 24px)}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+    .grid-gal{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(8px, 2.8vw, 12px)}
+    @media(min-width:860px){.grid-gal{grid-template-columns:repeat(3,1fr)}}
+    .tile{position:relative; overflow:hidden; border-radius:18px; border:1px solid rgba(244,114,182,.3); box-shadow:0 10px 18px rgba(253,164,175,.25)}
+    .tile img{display:block; width:100%; height:clamp(150px, 36vw, 220px); object-fit:cover; transition:transform .5s ease; touch-action:manipulation}
+    .tile:hover img{transform:scale(1.03)}
+    .tile:after{content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(255,228,230,.6), transparent); opacity:0; transition:opacity .35s}
+    .tile:hover:after{opacity:1}
+
+    footer{margin-top:40px; padding-top:16px; border-top:1px solid rgba(244,114,182,.3); color:#7f1d1d; font-size:clamp(12px, 2.8vw, 14px); display:flex; justify-content:space-between; gap:16px}
+
+    /* ===== МОБИЛЬНЫЕ ДОП-настройки ===== */
+    @media (max-width: 520px){
+      .bg{filter:blur(5px) saturate(1.02)}
+      .figure{border-radius:22px}
+      .card{border-radius:18px}
+      .tile{border-radius:16px}
+      nav a{margin-left:12px}
+    }
+      /* ===== ДОСТУПНОСТЬ: снижение анимации ===== */
+    @media (prefers-reduced-motion: reduce){
+      *{animation: none !important; transition: none !important}
+    }
+
+    /* ===== МОБИЛЬНЫЙ СТИЛЬ — СВОЯ КРАСОТА ===== */
+    @media (max-width: 520px){
+      /* Общая типографика и композиция */
+      body{background:var(--rose-50)}
+      .container{padding:16px 14px 64px}
+      .brand{font-size:26px; letter-spacing:.02em; text-align:center; width:100%}
+      header > div{justify-content:center}
+      nav{display:none}
+
+      /* Фон мягче для экрана телефона */
+      .bg{filter:blur(5px) saturate(1.02) brightness(1.02)}
+
+      /* HERO — открытка на весь экран по-вертикали */
+      .grid{gap:18px}
+      .card{border-radius:18px; padding:16px}
+      h2{font-size:22px; text-align:center}
+      p{font-size:15px}
+
+      /* Полный вынос изображения до краёв (full-bleed) */
+      .figure{border-radius:0; margin-left:-14px; margin-right:-14px; box-shadow:0 18px 36px rgba(253,164,175,.36)}
+      .figcap{font-size:12px; padding:10px 12px}
+
+      /* Цитаты — горизонтальный свайп-карточки */
+      .quotes{display:flex; overflow-x:auto; gap:12px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:4px}
+      .quotes blockquote{min-width:85%; scroll-snap-align:center}
+
+      /* Галерея — горизонтальная лента с прокруткой */
+      .grid-gal{display:flex; overflow-x:auto; gap:12px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:2px 2px 8px}
+      .tile{flex:0 0 78%; scroll-snap-align:center; border-radius:16px}
+      .tile img{height:56vw; max-height:320px}
+
+      footer{font-size:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="petals" aria-hidden="true">
+      <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+      <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+      <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    </div>
+
+    <header class="container">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+        <div class="brand">Самая прекрасная девушка</div>
+        <nav>
+          <a href="#about">О ней</a>
+          <a href="#gallery">Галерея</a>
+          <a href="#quotes">Слова</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="grid">
+        <div>
+          <div class="card">
+            <h2>Нежность. Элегантность. Современный минимализм.</h2>
+            <p>Этот сайт-открытка посвящён самой красивой девушке в мире. Мы сохранили лёгкость, чтобы главными были её взгляд, улыбка и настроение. Каждая фотография вписана в композицию бережно — как лепесток сакуры на весеннем ветру.</p>
+          </div>
+        </div>
+        <figure class="figure">
+          <img src="./image/hero.jpg" alt="Её портрет">
+          <figcaption class="figcap">Её красота — тишина, которая звучит.</figcaption>
+        </figure>
+      </section>
+
+      <section id="quotes" class="quotes">
+        <blockquote>Она — воплощение нежности и красоты, её улыбка освещает даже самый серый день.</blockquote>
+        <blockquote>Её взгляд глубже океана, а присутствие приносит спокойствие и гармонию.</blockquote>
+        <blockquote>Самая прекрасная девушка на свете — источник вдохновения и счастья.</blockquote>
+      </section>
+
+      <section id="about" class="about">
+        <div class="card">
+          <h3>О ней</h3>
+          <p>Её присутствие — как весенний рассвет над садом сакуры: мягкие оттенки, чистый воздух, спокойствие и вдохновение. Этот минималистичный дизайн оставляет пространство для главного — её естественной красоты.</p>
+        </div>
+      </section>
+
+      <section id="gallery" class="gallery">
+        <h3 class="sr-only">Галерея</h3>
+        <div class="grid-gal">
+          <div class="tile"><img src="./image/photo1.jpg" alt="Фото 1"></div>
+          <div class="tile"><img src="./image/photo2.jpg" alt="Фото 2"></div>
+          <div class="tile"><img src="./image/photo3.jpg" alt="Фото 3"></div>
+          <div class="tile"><img src="./image/photo4.jpg" alt="Фото 4"></div>
+          <div class="tile"><img src="./image/photo5.jpg" alt="Фото 5"></div>
+          <div class="tile"><img src="./image/photo6.jpg" alt="Фото 6"></div>
+        </div>
+      </section>
+
+      <footer>
+        <span>Сайт-открытка • нежный минимализм</span>
+        <span>Сакура & любовь</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
